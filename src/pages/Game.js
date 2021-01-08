@@ -24,16 +24,17 @@ export default function Game() {
         c3: "",
     })
     const check = useRef(() => {})
-   
-    check.current = () => {
-        const innerCheck = () => {
-            for (const [, value] of Object.entries(fields)) {
-                if (value==="") {
-                    return false
-                }
+    // check if fields has any empty values
+    const innerCheck = () => {
+        for (const [, value] of Object.entries(fields)) {
+            if (value==="") {
+                return false
             }
-            return true
         }
+        return true
+    }
+    check.current = () => {
+        
         if (
             (fields.a1=== "X" && fields.a2=== "X" && fields.a3=== "X") ||
             (fields.b1=== "X" && fields.b2=== "X" && fields.b3=== "X") ||
@@ -59,7 +60,7 @@ export default function Game() {
             setTitle("player2 has Won!")
             setShowModal(true)
         } else if (innerCheck()) {
-            setTitle("GAME IS TIE!!")
+            setTitle("Its a TIE!")
             setShowModal(true)
         }
     }
@@ -77,6 +78,10 @@ export default function Game() {
         })
         setShowModal(false);
         setShowModalGame(false);
+    }
+    const cancle = () => {
+        setShowModal(false);
+        setShowModalGame(true);
     }
 
     const handleChange= (e) => {
@@ -127,9 +132,9 @@ export default function Game() {
                 <p className="player1" style={{backgroundColor: move ? "green" : "red"}}>Player 1</p>
                 <p className="player2" style={{backgroundColor: move ? "red" : "green"}}>Player 2</p>
             </div>
-            <Modal title={title} showModal={showModal} playAgain={playAgain} />
+            <Modal title={title} showModal={showModal} playAgain={playAgain} cancle={cancle} />
             <ModalGame showModalGame={showModalGame} play={playAgain} />
-            <ModalTip  showModalTip={showModalTip} closeModalTip={closeModal} title={title} />
+            <ModalTip  showModalTip={showModalTip} closeModalTip={closeModal} title={title} dontShow={showModal}/>
         </div>
     )
 }

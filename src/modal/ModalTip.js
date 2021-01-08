@@ -1,8 +1,9 @@
 import React from 'react'
 import ReactDom from 'react-dom';
 
-export default function Modal({title, showModalTip, closeModalTip}) {
+export default function Modal({title, showModalTip, closeModalTip, dontShow}) {
     if (!showModalTip) return null;
+    if (dontShow) return null;
 
     const closeModalAuto = () => {
         setTimeout(() => {
